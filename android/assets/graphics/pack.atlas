@@ -1,0 +1,48 @@
+
+pack.png
+size: 512,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RainDrop
+  rotate: false
+  xy: 2, 25
+  size: 128, 171
+  orig: 128, 171
+  offset: 0, 0
+  index: -1
+RainDrop2
+  rotate: false
+  xy: 132, 46
+  size: 128, 150
+  orig: 128, 150
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 262, 100
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+leftPressed
+  rotate: false
+  xy: 360, 100
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 262, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+rightPressed
+  rotate: false
+  xy: 360, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
