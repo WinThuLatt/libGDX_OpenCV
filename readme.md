@@ -1,6 +1,6 @@
 I am on Windows, if you are using Linux/Mac, you might need to find your own way, should be simpler than this.
 
-Why do I use Eclipse instead of Android Studio? It will have all the new features, however it is extremely laggy and may not respond for a very long time doing all it's gradle build and gradle download and building the project,etc etc.
+Why do I use Eclipse instead of Android Studio? Android Studio will have all the new features, however it is extremely laggy and may not respond for a very long time doing all it's gradle build and gradle download and building the project,etc etc.
 
 __Eclipse Set up__
 
