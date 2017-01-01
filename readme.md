@@ -11,16 +11,19 @@ Why do I use Eclipse instead of Android Studio? Android Studio will have all the
 5. It is recommended to use a new workspace, as it makes the project explorer much neater IMHO.
 
 **Import Library Project**
+
 1. Eclipse -> right click on the project explorer panel -> Import -> General -> Existing Projects into workspace
 2. Select the OpenCV-android-sdk/sdk/ to import the OpenCVLibrary Project
 3. If it's not already, Alt+Enter/rightclick->Properties while the OpenCVLibrary Project is selected... and on Android, select Android Project Build Target and make sure isLibrary is checked/selected/marked.
 
 **Import Sample Projects**
+
 1. Eclipse -> right click on the project explorer panel -> Import -> General -> Existing Projects into workspace
 2. Select the OpenCV-android-sdk/samples/ to import the sample projects
 
 
 **Setting up the NDK** (The tricky part, I spent so long trying to fix it)
+
 1.  On Eclipse Preferences, Android -> NDK -> select the folder NDKROOT\build
 2. On the OpenCV Project with the native portion, right click on that project and choose "Add Native Support"
 3. You need the jni folder and I dont remember if libs folder is generated, if not create it,
@@ -36,5 +39,6 @@ Why do I use Eclipse instead of Android Studio? Android Studio will have all the
 
 
 **OpenCV manager installation**
+
 1. There's a folder inside the OpenCV-android-sdk called apk
 2. It has those OpenCV Manager apks and you dont have to install it from the playstore. Even if you had OpenCV Manager installed, it might not be the compatible version. Best solution is to use the apks that came in the same zip.
