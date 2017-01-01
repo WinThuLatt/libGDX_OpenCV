@@ -20,14 +20,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 public class AndroidLauncher extends AndroidApplication implements CvCameraViewListener2, AndroidUICallBack
 {
-    static{
-	    System.loadLibrary("jniModule");
+    static
+    {
+	System.loadLibrary("jniModule");
     }
     private static final String TAG = "libGDXOpenCV";
     private CameraBridgeViewBase mOpenCvCameraView;
@@ -98,7 +100,6 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	// addContentView(mOpenCvCameraView, new
 	// LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	addContentView(v, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
     }
 
     @Override
@@ -125,7 +126,9 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	{
 	    Log.d(TAG, "OpenCV library found inside package. Using it!");
 	    mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+	    
 	}
+	this.onCreate(null);
     }
 
     public void onDestroy()
@@ -142,7 +145,7 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	Log.w(TAG, "onCameraViewStarted");
 
 	mRgba = new Mat(height, width, CvType.CV_8UC4);
-        mGray = new Mat(height, width, CvType.CV_8UC1);
+	mGray = new Mat(height, width, CvType.CV_8UC1);
 	buf = new Mat(height, width, CvType.CV_8UC4);
     }
 
@@ -159,8 +162,8 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	mRgba = inputFrame.rgba();
 	Imgproc.cvtColor(mRgba, mGray, Imgproc.COLOR_BGR2GRAY);
 	Imgproc.cvtColor(mRgba, buf, Imgproc.COLOR_BGR2GRAY);
-//	Imgproc.Canny(buf, buf, 80, 100);
-	FindFeatures(mGray.getNativeObjAddr(), mRgba.getNativeObjAddr());
+	// Imgproc.Canny(buf, buf, 80, 100);
+	// FindFeatures(mGray.getNativeObjAddr(), mRgba.getNativeObjAddr());
 	return mRgba;
     }
 
@@ -168,21 +171,19 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
     public void ToastMessage(String s)
     {
 	handler.post(new Runnable()
-        {
+	{
 
-            @Override
-            public void run() {
-                //System.out.println("toatsing in launcher run");
-        	CharSequence sq = "HI"; 
-                Toast.makeText(instance,sq,Toast.LENGTH_LONG).show();
-            }
-
-        });
+	    @Override
+	    public void run()
+	    {
+		// System.out.println("toatsing in launcher run");
+		CharSequence sq = "HI";
+		Toast.makeText(instance, sq, Toast.LENGTH_LONG).show();
+	    }
+	});
     }
-    
 
-//    public native void hi(long matAddrGray, long matAddrRgba);
+    // public native void hi(long matAddrGray, long matAddrRgba);
     public native void FindFeatures(long matAddrGr, long matAddrRgba);
-
 
 }
