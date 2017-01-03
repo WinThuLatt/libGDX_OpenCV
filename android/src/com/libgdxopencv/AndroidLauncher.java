@@ -8,7 +8,10 @@ import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.Size;
+import org.opencv.features2d.FeatureDetector;
+import org.opencv.features2d.Features2d;
 import org.opencv.imgproc.Imgproc;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -20,7 +23,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -100,6 +102,7 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	// addContentView(mOpenCvCameraView, new
 	// LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	addContentView(v, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
     }
 
     @Override
@@ -126,7 +129,6 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	{
 	    Log.d(TAG, "OpenCV library found inside package. Using it!");
 	    mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-	    
 	}
 	this.onCreate(null);
     }
@@ -164,6 +166,15 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
 	Imgproc.cvtColor(mRgba, buf, Imgproc.COLOR_BGR2GRAY);
 	// Imgproc.Canny(buf, buf, 80, 100);
 	// FindFeatures(mGray.getNativeObjAddr(), mRgba.getNativeObjAddr());
+	// Imgproc.putText(mRgba, "hi", new Point(100,100), 3,1,new
+	// Scalar(255,0,0));
+	MatOfKeyPoint keypoints = new MatOfKeyPoint();
+
+	FeatureDetector detector = FeatureDetector.create(FeatureDetector.FAST);
+	Mat buf = new Mat();
+	Imgproc.cvtColor(mRgba, buf, Imgproc.COLOR_BGRA2BGR);
+	detector.detect(buf, keypoints);
+	Features2d.drawKeypoints(buf, keypoints, mRgba);
 	return mRgba;
     }
 
@@ -172,18 +183,15 @@ public class AndroidLauncher extends AndroidApplication implements CvCameraViewL
     {
 	handler.post(new Runnable()
 	{
-
 	    @Override
 	    public void run()
 	    {
-		// System.out.println("toatsing in launcher run");
 		CharSequence sq = "HI";
 		Toast.makeText(instance, sq, Toast.LENGTH_LONG).show();
 	    }
 	});
     }
 
-    // public native void hi(long matAddrGray, long matAddrRgba);
     public native void FindFeatures(long matAddrGr, long matAddrRgba);
 
 }

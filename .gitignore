@@ -71,3 +71,4 @@ settings.gradle
 ## OS Specific
 .DS_Store
 Thumbs.db
+/.gradle/

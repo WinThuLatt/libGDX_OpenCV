@@ -3,7 +3,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <vector>
-
 using namespace std;
 using namespace cv;
 //
@@ -34,9 +33,25 @@ JNIEXPORT void JNICALL Java_com_libgdxopencv_AndroidLauncher_FindFeatures(JNIEnv
 {
 	Mat& mGr = *(Mat*)addrGray;
 	Mat& mRgb = *(Mat*)addrRgba;
-	cv::Size size(3,3);
-	cv::GaussianBlur(img,img,size,0);
-	adaptiveThreshold(img, img,255,CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY,75,10);
-	cv::bitwise_not(img, img);
+
+//	Mat HSV;
+//	cvtColor(mRgb, HSV, CV_RGB2HSV);
+//
+//	Scalar   min(220/2, 0, 0);
+//	Scalar   max(260/2, 255, 255);
+//
+//	Mat threshold_frame;
+//	inRange( HSV, min, max, mRgb);
+
+	cv::Ptr<cv::ORB> detector = cv::ORB::create();
+
+	cvtColor(mRgb, mRgb, COLOR_RGBA2RGB);
+
+	vector<KeyPoint> keypoints;
+
+	detector->detect(mRgb, keypoints);
+
+	drawKeypoints(mRgb,keypoints, mRgb);
+
 }
 }

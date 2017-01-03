@@ -37,22 +37,23 @@ public class LoadingScreen implements Screen
 
     public LoadingScreen(libGDXOpenCV_Main app)
     {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, libGDXOpenCV_Main.WIDTH, libGDXOpenCV_Main.HEIGHT);
-        viewport = new FitViewport(libGDXOpenCV_Main.WIDTH, libGDXOpenCV_Main.HEIGHT, camera);
+	camera = new OrthographicCamera();
+	camera.setToOrtho(false, libGDXOpenCV_Main.WIDTH, libGDXOpenCV_Main.HEIGHT);
+	viewport = new FitViewport(libGDXOpenCV_Main.WIDTH, libGDXOpenCV_Main.HEIGHT, camera);
 
-        this.app = app;
-        app.getManager().load("graphics/pack.atlas", TextureAtlas.class);
-        font = new BitmapFont(Gdx.files.internal("fonts/cool.fnt"));
+	this.app = app;
+	app.getManager().load("graphics/pack.atlas", TextureAtlas.class);
+	font = new BitmapFont(Gdx.files.internal("fonts/cool.fnt"));
 
-        soundRaindrop = Gdx.audio.newSound(Gdx.files.internal("music/raindropsound1.mp3"));
+	soundRaindrop = Gdx.audio.newSound(Gdx.files.internal("music/raindropsound1.mp3"));
 
-        rainDrop1 = new Texture(Gdx.files.internal("graphics/RainDrop.png"));
-        rainDrop2 = new Texture(Gdx.files.internal("graphics/RainDrop2.png"));
+	rainDrop1 = new Texture(Gdx.files.internal("graphics/RainDrop.png"));
+	rainDrop2 = new Texture(Gdx.files.internal("graphics/RainDrop2.png"));
 
-
-        r1 = new Vector2(MathUtils.random(libGDXOpenCV_Main.WIDTH - rainDrop1.getWidth()), MathUtils.random(libGDXOpenCV_Main.HEIGHT));
-        r2 = new Vector2(MathUtils.random(libGDXOpenCV_Main.WIDTH - rainDrop2.getWidth()), MathUtils.random(libGDXOpenCV_Main.HEIGHT));
+	r1 = new Vector2(MathUtils.random(libGDXOpenCV_Main.WIDTH - rainDrop1.getWidth()),
+		MathUtils.random(libGDXOpenCV_Main.HEIGHT));
+	r2 = new Vector2(MathUtils.random(libGDXOpenCV_Main.WIDTH - rainDrop2.getWidth()),
+		MathUtils.random(libGDXOpenCV_Main.HEIGHT));
     }
 
     @Override
@@ -63,36 +64,35 @@ public class LoadingScreen implements Screen
     @Override
     public void render(float delta)
     {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	Gdx.gl.glClearColor(0, 0, 0, 0);
+	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+	if (app.getManager().update())
+	{
+	    app.setAtlas((TextureAtlas) app.getManager().get("graphics/pack.atlas"));
+	    app.setScreen(new GameScreen(app));
+	}
+	updateRainDropPositions();
+	time += delta;
 
-        if (app.getManager().update())
-        {
-            app.setAtlas((TextureAtlas) app.getManager().get("graphics/pack.atlas"));
-            app.setScreen(new GameScreen(app));
-        }
-        updateRainDropPositions();
-        time += delta;
+	app.getBatch().setProjectionMatrix(this.camera.combined);
+	app.getBatch().begin();
 
-        app.getBatch().setProjectionMatrix(this.camera.combined);
-        app.getBatch().begin();
-
-        if (drawR1)
-        {
-            app.getBatch().draw(rainDrop1, r1.x, r1.y);
-        }
-        if (drawR2)
-        {
-            app.getBatch().draw(rainDrop2, r2.x, r2.y);
-        }
-        font.draw(app.getBatch(), "loading", libGDXOpenCV_Main.WIDTH / 2 - 48, 100);
-        app.getBatch().end();
+	if (drawR1)
+	{
+	    app.getBatch().draw(rainDrop1, r1.x, r1.y);
+	}
+	if (drawR2)
+	{
+	    app.getBatch().draw(rainDrop2, r2.x, r2.y);
+	}
+	font.draw(app.getBatch(), "loading", libGDXOpenCV_Main.WIDTH / 2 - 48, 100);
+	app.getBatch().end();
     }
 
     @Override
     public void resize(int width, int height)
     {
-        viewport.update(width, height);
+	viewport.update(width, height);
     }
 
     @Override
@@ -117,18 +117,18 @@ public class LoadingScreen implements Screen
 
     private void updateRainDropPositions()
     {
-        r1.add(0, -3f);
-        r2.add(0, -3f);
-        if (r1.y == 0)
-        {
-            soundRaindrop.play();
-            drawR1 = false;
-        }
-        if (r2.y == 0)
-        {
-            soundRaindrop.play();
-            drawR2 = false;
-        }
+	r1.add(0, -3f);
+	r2.add(0, -3f);
+	if (r1.y == 0)
+	{
+	    soundRaindrop.play();
+	    drawR1 = false;
+	}
+	if (r2.y == 0)
+	{
+	    soundRaindrop.play();
+	    drawR2 = false;
+	}
     }
 
 }
